@@ -34,16 +34,21 @@ const questions = [
 function runApp() {
     return inquirer.prompt(questions)
         .then((data) => {
-        const logo = circle(data)
-        fs.writeFile(`./examples/${data.characters}.svg`, logo, function(err){
-            if (err) {
-                console.log(err)
-            } else {console.log('go look at your logo!')
-        }
-        })}
+            const shapeFunction = shapes[data.shape];
+            if (shapeFunction) {
+                const logo = shapeFunction(data);
+                fs.writeFile(`./examples/${data.characters}.svg`, logo, (err) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log('Go look at your logo!');
+                    }
+                });
+            } else {
+                console.error('Invalid shape selected');
+            }
+        });
+}
 
-    )}
-
-runApp()  
-
+runApp();
 // wrap in a function
