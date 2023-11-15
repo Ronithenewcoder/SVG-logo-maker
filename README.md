@@ -14,7 +14,7 @@ Classmates
 Youtube
 
 ## Demonstration Video
-![Alt text](https://clipchamp.com/watch/uh9tOmW1T7R)
+https://clipchamp.com/watch/uh9tOmW1T7R
 
 ## Screenshot
 ![Alt text](image.png)
