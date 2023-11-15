@@ -17,7 +17,7 @@ const questions = [
         message: 'type in the color for the text color',
     },
     {
-        type: 'choice',
+        type: 'list',
         name: 'shape',
         message: 'triangle, circle, square',
         choices: ['triangle', 'circle', 'square'],
@@ -30,22 +30,38 @@ const questions = [
 
 
 ];
+
+
 function runApp() {
     return inquirer.prompt(questions)
         .then((data) => {
             const shapeFunction = shapes[data.shape];
             if (shapeFunction) {
                 const logo = shapeFunction(data);
-                fs.writeFile(`./examples/${data.characters}.svg`, logo, (err) => {
+
+                const directoryPath = './examples';
+
+                if (!fs.existsSync(directoryPath)) {
+                    fs.mkdirSync(directoryPath);
+                }
+
+                const fileName = `${data.characters.replace(/\s/g, '_')}_${data.shape}.svg`;
+                const filePath = `./examples/${fileName}`;
+
+                fs.writeFile(filePath, logo, (err) => {
                     if (err) {
-                        console.error(err);
+                        console.error(`Error writing file ${filePath}: ${err}`);
                     } else {
-                        console.log('Go look at your logo!');
+                        console.log('Logo saved successfully!');
+                        console.log('File saved at:', filePath);
                     }
                 });
             } else {
-                console.error('shape does not exist');
+                console.error('Invalid shape selected');
             }
+        })
+        .catch((error) => {
+            console.error(`Error during inquirer prompt: ${error}`);
         });
 }
 
