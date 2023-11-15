@@ -1,10 +1,9 @@
 function init() {}
 
 init();
-const myModule = require('./index');
 const inquirer = require('inquirer');
 const fs = require('fs');
-const circle = require(`./lib/shapes.js`);
+const shapes = require(`./lib/shapes.js`);
 
 const questions = [
     {
@@ -45,7 +44,7 @@ function runApp() {
                     }
                 });
             } else {
-                console.error('Invalid shape selected');
+                console.error('shape does not exist');
             }
         });
 }
